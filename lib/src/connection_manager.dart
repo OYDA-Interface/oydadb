@@ -18,6 +18,65 @@ class ConnectionManager {
     return _instance!;
   }
 
+  void checkConnectionParams() {
+    if (host == null || port == null || oydaBase == null || user == null || password == null) {
+      throw Exception('Missing required parameters for setting the oydabase.');
+    }
+  }
+
+  Map<String, dynamic> getConnectionParams([Map<String, dynamic>? additionalParams]) {
+    checkConnectionParams();
+    final Map<String, dynamic> params = {
+      'host': host,
+      'port': port,
+      'oydaBase': oydaBase,
+      'user': user,
+      'password': password,
+    };
+    if (additionalParams != null) {
+      params.addAll(additionalParams);
+    }
+    return params;
+  }
+
+  Future<T> sendRequest<T>(String endpoint, Map<String, dynamic> additionalParams) async {
+    final requestBody = getConnectionParams(additionalParams);
+
+    final url = Uri.parse('http://localhost:5000/$endpoint');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
+
+        if (T == List<Map<String, dynamic>>) {
+          final result = responseBody as List<dynamic>;
+          return result.map((e) => e as Map<String, dynamic>).toList() as T;
+
+        } else if (T == bool) {
+          return responseBody['exists'] as T;
+          
+        } else {
+          return null as T;
+        }
+      } else {
+        final responseBody = jsonDecode(response.body);
+        throw Exception('Error: ${responseBody['error']}');
+      }
+    } on http.ClientException catch (e) {
+      throw Exception('Error connecting to the oydabase: $e');
+    } on FormatException catch (e) {
+      throw Exception('Format error: $e');
+    } catch (e) {
+      throw Exception('Unexpected error: $e');
+    }
+  }
+
   Future<void> setOydaBase(String? host, String? port, String? oydaBase, String? user, String? password) async {
     if (host == null || port == null || oydaBase == null || user == null || password == null) {
       throw Exception('Missing required parameters for setting the oydabase.');
@@ -69,5 +128,14 @@ class ConnectionManager {
     } catch (e) {
       throw Exception('Error connecting to the oydabase: $e');
     }
+  }
+
+  Future<void> unsetOydabase() async {
+    host = null;
+    port = null;
+    oydaBase = null;
+    user = null;
+    password = null;
+    print('Oydabase unset successfully');
   }
 }

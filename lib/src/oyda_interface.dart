@@ -22,7 +22,19 @@ class OydaInterface {
     return await tableManager.selectTable(tableName);
   }
 
+  Future<bool> tableExists(String tableName) async {
+    return await tableManager.tableExists(tableName);
+  }
+
   Future<void> dropTable(String tableName) async {
     await tableManager.dropTable(tableName);
+  }
+
+  Future<List<Map<String, dynamic>>> selectRows(String tableName, List<Condition> conditions) async {
+    return await DataManager(connectionManager).selectRows(tableName, conditions);
+  }
+
+  Future<List<Map<String, dynamic>>> selectColumns(String tableName, List<String> columns, [List<Condition>? conditions]) async {
+    return await DataManager(connectionManager).selectColumns(tableName, columns, conditions);
   }
 }
