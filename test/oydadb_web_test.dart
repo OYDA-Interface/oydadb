@@ -30,15 +30,40 @@ void main() {
       var table = await oydaInterface.selectTable('test');
       print(table);
     });
-    test('drop table', () async {
+
+    test('tableExists', () async {
       final oydaInterface = OydaInterface();
       await oydaInterface.setOydaBase(host, port, oydaBase, user, password);
+      print(await oydaInterface.tableExists('test'));
       var table = await oydaInterface.selectTable('test');
       print(table);
-      await oydaInterface.dropTable('test');
-      // await TableManager(oydaInterface).selectTable('test');
     });
 
+    test('select rows', () async {
+      final oydaInterface = OydaInterface();
+      await oydaInterface.setOydaBase(host, port, oydaBase, user, password);
+      var rows = await oydaInterface.selectRows('test', [Condition('age', '=', 24)]);
+      print(rows);
+    });
 
+    test('select columns', () async {
+      final oydaInterface = OydaInterface();
+      await oydaInterface.setOydaBase(host, port, oydaBase, user, password);
+
+      var columns1 = await oydaInterface.selectColumns('test', ['name']);
+      print(columns1);
+
+      var columns2 =
+          await oydaInterface.selectColumns('test', ['name'], [Condition('name', '=', 'king')]);
+      print(columns2);
+    });
+
+    // test('drop table', () async {
+    //   final oydaInterface = OydaInterface();
+    //   await oydaInterface.setOydaBase(host, port, oydaBase, user, password);
+    //   var table = await oydaInterface.selectTable('test');
+    //   print(table);
+    //   await oydaInterface.dropTable('test3');
+    // });
   });
 }
