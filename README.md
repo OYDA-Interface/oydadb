@@ -1,10 +1,12 @@
 # oydadb
 
-The `oydadb` package, a powerful tool that simplifies interactions with PostgreSQL databases in Flutter applications. It encapsulates all necessary database operations within the `OYDAInterface` class, making it easier to perform CRUD operations.
+The `oydadb` package a powerful tool that simplifies interactions with PostgreSQL databases in Flutter applications. It encapsulates all necessary database operations within the `OYDAInterface` class, making it easier to perform CRUD operations.
 
 ## Getting Started
 
-First, add the `oydadb` package to your `pubspec.yaml` file:
+First, don't use this package yet, it's not ready
+
+Then, add the `oydadb` package to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
