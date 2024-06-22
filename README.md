@@ -1,36 +1,53 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# oydadb
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+The OYDA Interface is a comprehensive solution designed to enable independent collaborative development. The first step towards this goal is the introduction of the `oydadb` package, a powerful tool that simplifies interactions with PostgreSQL databases in Flutter applications. It encapsulates all necessary database operations within the `OYDAInterface` class, making it easier to perform CRUD operations.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+## Getting Started
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+First, add the `oydadb` package to your `pubspec.yaml` file:
 
-## Features
+```yaml
+dependencies:
+  oydadb: ^1.0.0
+```
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Then, run `flutter pub get` to fetch the package.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+Import the package in your Dart file:
 
 ```dart
-const like = 'sample';
+import 'package:oydadb/oydadb.dart';
 ```
+
+Create an instance of the `OYDAInterface` class:
+
+```dart
+final oydaInterface = OYDAInterface();
+```
+
+Set up the database connection:
+
+```dart
+await oydaInterface.setOydaBase(devKey, oydabaseName, host, port, username, password, useSSL);
+```
+
+Please replace the placeholders with your actual values and add more details as necessary.
+
+Now, you can use the `oydaInterface` instance to interact with your PostgreSQL database. For example, to create a table:
+
+```dart
+const tableName = 'test_table';
+final columns = {
+  'id': 'SERIAL PRIMARY KEY',
+  'name': 'VARCHAR(255)',
+  'age': 'INTEGER',
+};
+await oydaInterface.createTable(tableName, columns);
+```
+
+This first version of the OYDA Interface, featuring the `oydadb` package, is a significant step towards making database operations in Flutter applications more straightforward and efficient, and enabling independent collaborative development.
 
 ## Additional information
 
