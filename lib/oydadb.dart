@@ -1,4 +1,4 @@
-library oydadb_web;
+library oydadb;
 
 export 'src/connection_manager.dart';
 export 'src/table_manager.dart';

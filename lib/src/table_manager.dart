@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:oydadb_web/oydadb_web.dart';
+import 'package:oydadb/oydadb.dart';
 
 
 class TableManager {

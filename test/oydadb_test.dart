@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:oydadb_web/oydadb_web.dart';
-import 'package:oydadb_web/src/oyda_interface.dart';
+import 'package:oydadb/oydadb.dart';
+import 'package:oydadb/src/oyda_interface.dart';
 
 void main() {
   // Test the OYDAInterface class
