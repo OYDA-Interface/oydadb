@@ -1,4 +1,4 @@
-import 'package:oydadb_web/oydadb_web.dart';
+import 'package:oydadb/oydadb.dart';
 
 class DataManager {
   final ConnectionManager connectionManager;

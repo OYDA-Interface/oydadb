@@ -69,7 +69,7 @@ class ConnectionManager {
         throw Exception('Error: ${responseBody['error']}');
       }
     } on http.ClientException catch (e) {
-      throw Exception('Error connecting to the oydabase: $e');
+      throw Exception('Error connecting to the Oydabase: $e');
     } on FormatException catch (e) {
       throw Exception('Format error: $e');
     } catch (e) {
@@ -126,7 +126,7 @@ class ConnectionManager {
         throw '${responseBody['error']}';
       }
     } catch (e) {
-      throw Exception('Error connecting to the oydabase: $e');
+      throw Exception('Error connecting to the Oydabase: $e');
     }
   }
 

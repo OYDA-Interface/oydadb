@@ -1,5 +1,5 @@
-name: oydadb_web
-description: "A new Flutter package project."
+name: oydadb
+description: "database interface for oyda applications."
 version: 0.0.1
 homepage:
 
