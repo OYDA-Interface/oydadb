@@ -34,7 +34,8 @@ class OydaInterface {
     return await DataManager(connectionManager).selectRows(tableName, conditions);
   }
 
-  Future<List<Map<String, dynamic>>> selectColumns(String tableName, List<String> columns, [List<Condition>? conditions]) async {
+  Future<List<Map<String, dynamic>>> selectColumns(String tableName, List<String> columns,
+      [List<Condition>? conditions]) async {
     return await DataManager(connectionManager).selectColumns(tableName, columns, conditions);
   }
 }
