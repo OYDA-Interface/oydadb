@@ -1,13 +1,14 @@
 // ignore_for_file: avoid_print
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ConnectionManager {
-  String? host;
-  String? port;
-  String? oydaBase;
-  String? user;
-  String? password;
+  String? host = dotenv.env['HOST']!;
+  String? port = dotenv.env['PORT']!;
+  String? oydaBase = dotenv.env['OYDA_BASE']!;
+  String? user = dotenv.env['USER']!;
+  String? password = dotenv.env['PASSWORD']!;
 
   static ConnectionManager? _instance;
 
@@ -57,10 +58,8 @@ class ConnectionManager {
         if (T == List<Map<String, dynamic>>) {
           final result = responseBody as List<dynamic>;
           return result.map((e) => e as Map<String, dynamic>).toList() as T;
-
         } else if (T == bool) {
           return responseBody['exists'] as T;
-          
         } else {
           return null as T;
         }
@@ -113,6 +112,11 @@ class ConnectionManager {
       );
 
       if (response.statusCode == 200) {
+        dotenv.env['HOST'] = host;
+        dotenv.env['PORT'] = port;
+        dotenv.env['OYDA_BASE'] = oydaBase;
+        dotenv.env['USER'] = user;
+        dotenv.env['PASSWORD'] = password;
         this.host = host;
         this.port = port;
         this.oydaBase = oydaBase;
@@ -120,7 +124,7 @@ class ConnectionManager {
         this.password = password;
 
         final responseBody = jsonDecode(response.body);
-        print(responseBody['message'] ?? 'Oydabase set successfully');
+        print(responseBody['message'] ?? 'Connected to Oydabase @ $host:$port/$oydaBase.');
       } else {
         final responseBody = jsonDecode(response.body);
         throw '${responseBody['error']}';
