@@ -1,6 +1,6 @@
 name: oydadb
 description: "database interface for oyda applications."
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/OYDA-Interface
 
 environment:
@@ -24,6 +24,6 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-flutter:
-  assets:
-    - .env
+# flutter:
+#   assets:
+#     - .env
