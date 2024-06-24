@@ -1,6 +1,6 @@
 name: oydadb
 description: "database interface for oyda applications."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/OYDA-Interface
 
 environment:
@@ -11,9 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   postgres: ^2.6.4
-  http: ^0.13.4
   dotenv: ^4.2.0
   flutter_dotenv: ^5.1.0
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
