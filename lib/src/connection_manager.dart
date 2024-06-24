@@ -43,7 +43,7 @@ class ConnectionManager {
   Future<T> sendRequest<T>(String endpoint, Map<String, dynamic> additionalParams) async {
     final requestBody = getConnectionParams(additionalParams);
 
-    final url = Uri.parse('http://localhost:5000/$endpoint');
+    final url = Uri.parse('http://localhost:5000$endpoint');
 
     try {
       final response = await http.post(

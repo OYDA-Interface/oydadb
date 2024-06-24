@@ -10,7 +10,7 @@ class DataManager {
       'table_name': tableName,
       'conditions': conditionString,
     };
-    return await connectionManager.sendRequest('api/selectRows', additionalParams);
+    return await connectionManager.sendRequest('/api/selectRows', additionalParams);
   }
 
   Future<List<Map<String, dynamic>>> selectColumns(String tableName, List<String> columns,
@@ -21,6 +21,6 @@ class DataManager {
       'columns': columns,
       'conditions': conditionString,
     };
-    return await connectionManager.sendRequest('api/selectColumns', additionalParams);
+    return await connectionManager.sendRequest('/api/selectColumns', additionalParams);
   }
 }
