@@ -1,7 +1,7 @@
 name: oydadb
 description: "database interface for oyda applications."
-version: 0.0.1
-homepage:
+version: 1.0.0
+homepage: https://github.com/OYDA-Interface
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
