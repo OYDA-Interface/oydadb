@@ -21,6 +21,6 @@ dev_dependencies:
   flutter_lints: ^3.0.0
 
 # Uncomment this when testing the package
-# flutter:
-#   assets:
-#     - .env
+flutter:
+  assets:
+    - .env
