@@ -8,23 +8,19 @@ import 'package:oydadb/src/oyda_interface.dart';
 void main() {
   // Test the OYDAInterface class
 
-  group('OYDAInterface', () {
-    test('change/update current oydabase', () async {
+  group('OYDAInterface', (){
       String host = 'localhost';
       String port = '5432';
       String oydaBase = 'oyda_db';
       String user = 'oydaadmin';
       String password = 'none';
+      
+    test('change/update current oydabase', () async {
       await dotenv.load(fileName: ".env");
       await OydaInterface().setOydaBase(host, port, oydaBase, user, password);
     });
 
     test('double setOydaBase', () async {
-      String host = 'localhost';
-      String port = '5432';
-      String oydaBase = 'oyda_db';
-      String user = 'oydaadmin';
-      String password = 'none';
       await dotenv.load(fileName: ".env");
       await OydaInterface().setOydaBase(host, port, oydaBase, user, password);
       await OydaInterface().setOydaBase(host, port, oydaBase, user, password);
