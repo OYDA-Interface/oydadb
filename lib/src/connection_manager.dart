@@ -3,6 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+/// The `ConnectionManager` class provides methods for setting up and managing the connection parameters
+/// required to connect to the Oydabase server. It ensures only one instance of `ConnectionManager` is created
+/// and provides a static method to access that instance. It also includes methods for sending requests to the server
+/// and handling the responses.
 class ConnectionManager {
   String? host = dotenv.env['HOST']!;
   String? port = dotenv.env['PORT']!;
@@ -19,12 +23,24 @@ class ConnectionManager {
     return _instance!;
   }
 
+  /// Checks if all the required connection parameters are provided.
+  ///
+  /// Throws an exception if any of the required parameters (host, port, oydaBase, user, password) is missing.
   void checkConnectionParams() {
     if (host == null || port == null || oydaBase == null || user == null || password == null) {
       throw Exception('Missing required parameters for setting the oydabase.');
     }
   }
 
+  /// Retrieves the connection parameters as a map.
+  ///
+  /// This method returns a map containing the connection parameters required to establish a connection to the database.
+  /// The connection parameters include the host, port, oydaBase, user, and password.
+  /// An optional `additionalParams` parameter can be provided to include any additional connection parameters.
+  /// If `additionalParams` is provided, the additional parameters will be merged with the default parameters.
+  ///
+  /// Returns:
+  ///   - A map containing the connection parameters.
   Map<String, dynamic> getConnectionParams([Map<String, dynamic>? additionalParams]) {
     checkConnectionParams();
     final Map<String, dynamic> params = {
@@ -40,7 +56,16 @@ class ConnectionManager {
     return params;
   }
 
-  Future<T> sendRequest<T>(String endpoint, Map<String, dynamic> additionalParams) async {
+  /// Sends a request to the specified `endpoint` with the given `additionalParams`.
+  ///
+  /// This method returns a `Future` that resolves to the response of the request.
+  /// The type of the response is specified by the generic type parameter `T`.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// final response = await sendRequest<MyResponse>('https://example.com/api', {'param1': 'value1'});
+  /// ```
+  Future<T> sendRequest<T>(String endpoint, Map<String, dynamic> additionalParams) async {  
     final requestBody = getConnectionParams(additionalParams);
 
     final url = Uri.parse('http://localhost:5000$endpoint');
@@ -76,6 +101,16 @@ class ConnectionManager {
     }
   }
 
+  @Deprecated("Set the oydabase from the oydacli instead. This method will be removed in the future.")
+  /// Sets the OYDA base configuration.
+  ///
+  /// The `host` parameter specifies the host address.
+  /// The `port`parameter specifies the port number.
+  /// The `oydaBase` parameter specifies the OYDA base.
+  /// The `user` parameter specifies the username.
+  /// The `password` parameter specifies the password.
+  ///
+  /// Returns a `Future` that completes when the OYDA base is set.
   Future<void> setOydaBase(String? host, String? port, String? oydaBase, String? user, String? password) async {
     if (host == null || port == null || oydaBase == null || user == null || password == null) {
       throw Exception('Missing required parameters for setting the oydabase.');
@@ -95,7 +130,7 @@ class ConnectionManager {
       return;
     }
 
-    final url = Uri.parse('http://localhost:5000/api/setOydabase');
+    final url = Uri.parse('http://localhost:5000/api/set_oydabase');
     final Map<String, dynamic> requestBody = {
       'host': host,
       'port': port,
@@ -134,7 +169,14 @@ class ConnectionManager {
     }
   }
 
-  Future<void> unsetOydabase() async {
+  /// Unsets the Oydabase.
+  ///
+  /// This method is used to unset the Oydabase. It does not return any value.
+  /// Example usage:
+  /// ```dart
+  /// await unsetOydabase();
+  /// ```
+  Future<void> unsetOydabase() async {  
     host = null;
     port = null;
     oydaBase = null;

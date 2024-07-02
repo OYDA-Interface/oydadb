@@ -23,23 +23,10 @@ Import the package in your Dart file:
 import 'package:oydadb/oydadb.dart';
 ```
 
-Set up the database connection:
+Now, you can use the `oydaInterface` instance to interact with your PostgreSQL database. For example, to select an existing table a table:
 
 ```dart
-await OydaInterface().setOydaBase(devKey, oydabaseName, host, port, username, password, useSSL);
+  await dotenv.load(fileName: ".env");
+  var table = await OydaInterface().selectTable('test');
+  print(table);
 ```
-
-Now, you can use the `oydaInterface` instance to interact with your PostgreSQL database. For example, to create a table:
-
-```dart
-const tableName = 'test_table';
-final columns = {
-  'id': 'SERIAL PRIMARY KEY',
-  'name': 'VARCHAR(255)',
-  'age': 'INTEGER',
-};
-await OydaInterface().createTable(tableName, columns);
-```
-
-
-
