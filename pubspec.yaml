@@ -1,6 +1,6 @@
 name: oydadb
 description: "database interface for oyda applications."
-version: 1.0.5
+version: 1.0.7
 homepage: https://github.com/OYDA-Interface
 
 environment:
