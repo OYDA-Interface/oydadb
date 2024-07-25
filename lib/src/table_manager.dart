@@ -6,16 +6,17 @@ import 'package:oydadb/oydadb.dart';
 class TableManager {
   final ConnectionManager connectionManager;
 
-
   /// Constructs a `TableManager` with the given `connectionManager`.
   TableManager(this.connectionManager);
 
   /// Creates a new table in the oydabase with the .
   ///
   /// The `tableName` parameter specifies the name of the table to select from.
+  /// The `columns` parameter specifies the columns of the table to create.
   /// Returns a `Future` that completes with a list of maps, where each map represents a row in the table.
   Future<List<Map<String, dynamic>>> createTable(String tableName, Map<String, dynamic> columns) async {
-    final additionalParams = {'table_name': tableName, 'columns': columns};
+    String? devKey = connectionManager.devKey;
+    final additionalParams = {'table_name': '${devKey}_$tableName', 'columns': columns};
     return await connectionManager.sendRequest('/api/create_table', additionalParams);
   }
 
@@ -28,8 +29,7 @@ class TableManager {
     final additionalParams = {
       'table_name': '${devKey}_$tableName',
     };
-    return await connectionManager.sendRequest(
-        '/api/select_table', additionalParams);
+    return await connectionManager.sendRequest('/api/select_table', additionalParams);
   }
 
   /// Checks if the specified table exists in the database.
@@ -41,8 +41,7 @@ class TableManager {
     final additionalParams = {
       'table_name': '${devKey}_$tableName',
     };
-    return await connectionManager.sendRequest(
-        '/api/table_exists', additionalParams);
+    return await connectionManager.sendRequest('/api/table_exists', additionalParams);
   }
 
   /// Drops the specified table from the database.
@@ -54,7 +53,6 @@ class TableManager {
     final additionalParams = {
       'table_name': '${devKey}_$tableName',
     };
-    return await connectionManager.sendRequest(
-        '/api/drop_table', additionalParams);
+    return await connectionManager.sendRequest('/api/drop_table', additionalParams);
   }
 }
