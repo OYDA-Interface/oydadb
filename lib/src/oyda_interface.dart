@@ -15,12 +15,17 @@ class OydaInterface {
 
   static final OydaInterface _instance = OydaInterface._internal();
 
+  @Deprecated('Use the `oydacli` to set the OYDA base configuration.')
   /// Sets the OYDA base configuration.
   ///
   /// This method is deprecated and will be removed in the future.
   /// It is recommended to set the OYDA base from the oydacli instead.
   Future<void> setOydaBase(String host, String port, String oydaBase, String user, String password) async {
     await connectionManager.setOydaBase(host, port, oydaBase, user, password);
+  }
+
+  Future<List<Map<String, dynamic>>> createTable(String tableName, Map<String, dynamic> columns) async {
+    return await tableManager.createTable(tableName, columns);
   }
 
   /// Selects all rows from the specified table.
