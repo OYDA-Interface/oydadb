@@ -2,7 +2,7 @@
 
 import 'package:oydadb/oydadb.dart';
 
-/// The `TableManager` class is responsible for managing table operations.  
+/// The `TableManager` class is responsible for managing table operations.
 class TableManager {
   final ConnectionManager connectionManager;
 
@@ -14,8 +14,12 @@ class TableManager {
   /// The `tableName` parameter specifies the name of the table to select from.
   /// Returns a `Future` that completes with a list of maps, where each map represents a row in the table.
   Future<List<Map<String, dynamic>>> selectTable(String tableName) async {
-    final additionalParams = {'table_name': tableName};
-    return await connectionManager.sendRequest('/api/select_table', additionalParams);
+    String? devKey = connectionManager.devKey;
+    final additionalParams = {
+      'table_name': '${devKey}_$tableName',
+    };
+    return await connectionManager.sendRequest(
+        '/api/select_table', additionalParams);
   }
 
   /// Checks if the specified table exists in the database.
@@ -23,8 +27,12 @@ class TableManager {
   /// The `tableName` parameter specifies the name of the table to check.
   /// Returns a `Future` that completes with a boolean value indicating whether the table exists.
   Future<bool> tableExists(String tableName) async {
-    final additionalParams = {'table_name': tableName};
-    return await connectionManager.sendRequest('/api/table_exists', additionalParams);
+    String? devKey = connectionManager.devKey;
+    final additionalParams = {
+      'table_name': '${devKey}_$tableName',
+    };
+    return await connectionManager.sendRequest(
+        '/api/table_exists', additionalParams);
   }
 
   /// Drops the specified table from the database.
@@ -32,7 +40,11 @@ class TableManager {
   /// The `tableName` parameter specifies the name of the table to drop.
   /// Returns a `Future` that completes when the table is dropped.
   Future<void> dropTable(String tableName) async {
-    final additionalParams = {'table_name': tableName};
-    return await connectionManager.sendRequest('/api/drop_table', additionalParams);
+    String? devKey = connectionManager.devKey;
+    final additionalParams = {
+      'table_name': '${devKey}_$tableName',
+    };
+    return await connectionManager.sendRequest(
+        '/api/drop_table', additionalParams);
   }
 }
