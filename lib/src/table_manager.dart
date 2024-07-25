@@ -6,6 +6,7 @@ import 'package:oydadb/oydadb.dart';
 class TableManager {
   final ConnectionManager connectionManager;
 
+
   /// Constructs a `TableManager` with the given `connectionManager`.
   TableManager(this.connectionManager);
 
@@ -13,9 +14,9 @@ class TableManager {
   ///
   /// The `tableName` parameter specifies the name of the table to select from.
   /// Returns a `Future` that completes with a list of maps, where each map represents a row in the table.
-  Future<List<Map<String, dynamic>>> createTable(String tableName, List columns) async {
+  Future<List<Map<String, dynamic>>> createTable(String tableName, Map<String, dynamic> columns) async {
     final additionalParams = {'table_name': tableName, 'columns': columns};
-    return await connectionManager.sendRequest('/api/select_table', additionalParams);
+    return await connectionManager.sendRequest('/api/create_table', additionalParams);
   }
 
   /// Selects all rows from the specified table and returns them as a list of maps.

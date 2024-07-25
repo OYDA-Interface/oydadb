@@ -10,7 +10,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class ConnectionManager {
   String? host = dotenv.env['HOST']!;
   String? port = dotenv.env['PORT']!;
-  String? oydaBase = dotenv.env['OYDA_BASE']!;
+  String? oydaBase = dotenv.env['OYDABASE']!;
   String? user = dotenv.env['USER']!;
   String? password = dotenv.env['PASSWORD']!;
   String? devKey = dotenv.env['DEV_KEY'];
@@ -28,8 +28,23 @@ class ConnectionManager {
   ///
   /// Throws an exception if any of the required parameters (host, port, oydaBase, user, password) is missing.
   void checkConnectionParams() {
-    if (host == null || port == null || oydaBase == null || user == null || password == null || devKey == null) {
-      throw Exception('Missing required parameters for setting the oydabase.');
+    if (host == null) {
+      throw Exception('Missing host for setting the oydabase.');
+    }
+    if (port == null) {
+      throw Exception('Missing port for setting the oydabase.');
+    }
+    if (oydaBase == null) {
+      throw Exception('Missing oydaBase for setting the oydabase.');
+    }
+    if (user == null) {
+      throw Exception('Missing user for setting the oydabase.');
+    }
+    if (password == null) {
+      throw Exception('Missing password for setting the oydabase.');
+    }
+    if (devKey == null) {
+      throw Exception('Missing devKey for setting the oydabase.');
     }
   }
 
@@ -70,7 +85,7 @@ class ConnectionManager {
   Future<T> sendRequest<T>(String endpoint, Map<String, dynamic> additionalParams) async {
     final requestBody = getConnectionParams(additionalParams);
 
-    final url = Uri.parse('http://oydabackend.azurewebsites.net$endpoint');
+    final url = Uri.parse('https://oydabackend.azurewebsites.net$endpoint');
 
     try {
       final response = await http.post(
@@ -81,10 +96,13 @@ class ConnectionManager {
 
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
+        print(responseBody.runtimeType);
 
         if (T == List<Map<String, dynamic>>) {
           final result = responseBody as List<dynamic>;
           return result.map((e) => e as Map<String, dynamic>).toList() as T;
+        } else if (T == Map<String, dynamic>) {
+          return responseBody;
         } else if (T == bool) {
           return responseBody['exists'] as T;
         } else {
@@ -152,7 +170,7 @@ class ConnectionManager {
       if (response.statusCode == 200) {
         dotenv.env['HOST'] = host;
         dotenv.env['PORT'] = port;
-        dotenv.env['OYDA_BASE'] = oydaBase;
+        dotenv.env['OYDABASE'] = oydaBase;
         dotenv.env['USER'] = user;
         dotenv.env['PASSWORD'] = password;
         this.host = host;
