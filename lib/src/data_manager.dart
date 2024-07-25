@@ -16,7 +16,7 @@ class DataManager {
         conditions.map((condition) => condition.toString()).join(' AND ');
     String? devKey = connectionManager.devKey;
     final additionalParams = {
-      'table_name': '$tableName{_$devKey}',
+      'table_name': '${tableName}_$devKey',
       'conditions': conditionString,
     };
     return await connectionManager.sendRequest(
@@ -34,7 +34,7 @@ class DataManager {
             '';
     String? devKey = connectionManager.devKey;
     final additionalParams = {
-      'table_name': '$tableName{_$devKey}',
+      'table_name': '${tableName}_$devKey',
       'columns': columns,
       'conditions': conditionString,
     };

@@ -18,7 +18,7 @@ class TableManager {
       String tableName, Map<String, dynamic> columns) async {
     String? devKey = connectionManager.devKey;
     final additionalParams = {
-      'table_name': '$tableName{_$devKey}',
+      'table_name': '${tableName}_$devKey',
       'columns': columns
     };
     return await connectionManager.sendRequest(
@@ -32,7 +32,7 @@ class TableManager {
   Future<List<Map<String, dynamic>>> selectTable(String tableName) async {
     String? devKey = connectionManager.devKey;
     final additionalParams = {
-      'table_name': '$tableName{_$devKey}',
+      'table_name': '${tableName}_$devKey',
     };
     return await connectionManager.sendRequest(
         '/api/select_table', additionalParams);
@@ -45,7 +45,7 @@ class TableManager {
   Future<bool> tableExists(String tableName) async {
     String? devKey = connectionManager.devKey;
     final additionalParams = {
-      'table_name': '$tableName{_$devKey}',
+      'table_name': '${tableName}_$devKey',
     };
     return await connectionManager.sendRequest(
         '/api/table_exists', additionalParams);
@@ -58,7 +58,7 @@ class TableManager {
   Future<void> dropTable(String tableName) async {
     String? devKey = connectionManager.devKey;
     final additionalParams = {
-      'table_name': '$tableName{_$devKey}',
+      'table_name': '${tableName}_$devKey',
     };
     return await connectionManager.sendRequest(
         '/api/drop_table', additionalParams);
