@@ -13,6 +13,7 @@ class ConnectionManager {
   String? oydaBase = dotenv.env['OYDA_BASE']!;
   String? user = dotenv.env['USER']!;
   String? password = dotenv.env['PASSWORD']!;
+  String? devKey = dotenv.env['DEV_KEY'];
 
   static ConnectionManager? _instance;
 
@@ -31,7 +32,8 @@ class ConnectionManager {
         port == null ||
         oydaBase == null ||
         user == null ||
-        password == null) {
+        password == null ||
+        devKey == null) {
       throw Exception('Missing required parameters for setting the oydabase.');
     }
   }
@@ -54,6 +56,7 @@ class ConnectionManager {
       'oydaBase': oydaBase,
       'user': user,
       'password': password,
+      'devKey': devKey
     };
     if (additionalParams != null) {
       params.addAll(additionalParams);
