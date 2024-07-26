@@ -14,7 +14,7 @@ class TableManager {
   /// The `tableName` parameter specifies the name of the table to select from.
   /// The `columns` parameter specifies the columns of the table to create.
   /// Returns a `Future` that completes with a list of maps, where each map represents a row in the table.
-  Future<List<Map<String, dynamic>>> createTable(
+  Future<Map<String, dynamic>> createTable(
       String tableName, Map<String, dynamic> columns) async {
     String? devKey = connectionManager.devKey;
     final additionalParams = {

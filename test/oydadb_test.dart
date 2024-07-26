@@ -28,13 +28,32 @@ void main() {
 
     test('create table', () async {
       await dotenv.load(fileName: ".env");
-      await OydaInterface().createTable('newtable1', {'name': 'VARCHAR(255)', 'age': 'INTEGER'});
+      await OydaInterface()
+          .createTable('newtable1', {'name': 'VARCHAR(255)', 'age': 'INTEGER'});
     });
 
     test('select table', () async {
       await dotenv.load(fileName: ".env");
       var table = await OydaInterface().selectTable('newtable1');
       print(table);
+    });
+
+    test('insert row', () async {
+      await dotenv.load(fileName: ".env");
+      await OydaInterface()
+          .insertRow('newtable1', {'name': 'Kofi', 'age': 14});
+    });
+
+    test('update row', () async {
+      await dotenv.load(fileName: ".env");
+      await OydaInterface().updateRow('newtable1',
+          {'name': 'Dennis', 'age': 25}, [Condition('name', '=', 'Dennis')]);
+    });
+
+    test('delete row', () async {
+      await dotenv.load(fileName: ".env");
+      await OydaInterface()
+          .deleteRow('newtable1', [Condition('name', '=', 'Dennis')]);
     });
 
     // test('check if table exists', () async {
