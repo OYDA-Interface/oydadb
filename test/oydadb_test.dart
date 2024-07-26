@@ -37,12 +37,12 @@ void main() {
       print(table);
     });
 
-    // test('check if table exists', () async {
-    //   await dotenv.load(fileName: ".env");
-    //   print(await OydaInterface().tableExists('test'));
-    //   var table = await OydaInterface().selectTable('test');
-    //   print(table);
-    // });
+    test('check if table exists', () async {
+      await dotenv.load(fileName: ".env");
+      print(await OydaInterface().tableExists('newtable1'));
+      var table = await OydaInterface().selectTable('newtable1');
+      print(table);
+    });
 
     // test('select rows', () async {
     //   await dotenv.load(fileName: ".env");
