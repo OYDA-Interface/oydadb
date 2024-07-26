@@ -24,7 +24,7 @@ class OydaInterface {
     await connectionManager.setOydaBase(host, port, oydaBase, user, password);
   }
 
-  Future<List<Map<String, dynamic>>> createTable(String tableName, Map<String, dynamic> columns) async {
+  Future<Map<String, dynamic>> createTable(String tableName, Map<String, dynamic> columns) async {
     return await tableManager.createTable(tableName, columns);
   }
 
