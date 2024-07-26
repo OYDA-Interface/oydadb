@@ -37,7 +37,6 @@ void main() {
       var table = await OydaInterface().selectTable('newtable1');
       print(table);
     });
-
     test('insert row', () async {
       await dotenv.load(fileName: ".env");
       await OydaInterface()
@@ -62,6 +61,7 @@ void main() {
     //   var table = await OydaInterface().selectTable('test');
     //   print(table);
     // });
+
 
     // test('select rows', () async {
     //   await dotenv.load(fileName: ".env");

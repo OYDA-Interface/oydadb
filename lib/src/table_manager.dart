@@ -14,15 +14,10 @@ class TableManager {
   /// The `tableName` parameter specifies the name of the table to select from.
   /// The `columns` parameter specifies the columns of the table to create.
   /// Returns a `Future` that completes with a list of maps, where each map represents a row in the table.
-  Future<Map<String, dynamic>> createTable(
-      String tableName, Map<String, dynamic> columns) async {
+  Future<Map<String, dynamic>> createTable(String tableName, Map<String, dynamic> columns) async {
     String? devKey = connectionManager.devKey;
-    final additionalParams = {
-      'table_name': '${tableName}_$devKey',
-      'columns': columns
-    };
-    return await connectionManager.sendRequest(
-        '/api/create_table', additionalParams);
+    final additionalParams = {'table_name': '${tableName}_$devKey', 'columns': columns};
+    return await connectionManager.sendRequest('/api/create_table', additionalParams);
   }
 
   /// Selects all rows from the specified table and returns them as a list of maps.
@@ -34,8 +29,7 @@ class TableManager {
     final additionalParams = {
       'table_name': '${tableName}_$devKey',
     };
-    return await connectionManager.sendRequest(
-        '/api/select_table', additionalParams);
+    return await connectionManager.sendRequest('/api/select_table', additionalParams);
   }
 
   /// Checks if the specified table exists in the database.
@@ -47,8 +41,7 @@ class TableManager {
     final additionalParams = {
       'table_name': '${tableName}_$devKey',
     };
-    return await connectionManager.sendRequest(
-        '/api/table_exists', additionalParams);
+    return await connectionManager.sendRequest('/api/table_exists', additionalParams);
   }
 
   /// Drops the specified table from the database.
@@ -60,7 +53,6 @@ class TableManager {
     final additionalParams = {
       'table_name': '${tableName}_$devKey',
     };
-    return await connectionManager.sendRequest(
-        '/api/drop_table', additionalParams);
+    return await connectionManager.sendRequest('/api/drop_table', additionalParams);
   }
 }

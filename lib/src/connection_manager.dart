@@ -98,15 +98,26 @@ class ConnectionManager {
 
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
-        if (T == Map<String, dynamic>) {
-          return responseBody;
-        } else if (T == List<Map<String, dynamic>>) {
-          final result = responseBody as List<dynamic>;
-          return result.map((e) => e as Map<String, dynamic>).toList() as T;
+        if (T == List<Map<String, dynamic>>) {
+          if (responseBody is List) {
+            return responseBody.map((e) => e as Map<String, dynamic>).toList() as T;
+          } else {
+            throw Exception('Expected a List<Map<String, dynamic>> but got ${responseBody.runtimeType}');
+          }
+        } else if (T == Map<String, dynamic>) {
+          if (responseBody is Map) {
+            return responseBody as T;
+          } else {
+            throw Exception('Expected a Map<String, dynamic> but got ${responseBody.runtimeType}');
+          }
         } else if (T == bool) {
-          return responseBody['exists'] as T;
+          if (responseBody is Map && responseBody.containsKey('exists')) {
+            return responseBody['exists'] as T;
+          } else {
+            throw Exception('Expected a boolean in the response body but got ${responseBody.runtimeType}');
+          }
         } else {
-          return null as T;
+          throw Exception('Unsupported type $T');
         }
       } else {
         final responseBody = jsonDecode(response.body);
