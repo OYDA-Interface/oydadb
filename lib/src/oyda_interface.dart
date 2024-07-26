@@ -16,11 +16,13 @@ class OydaInterface {
   static final OydaInterface _instance = OydaInterface._internal();
 
   @Deprecated('Use the `oydacli` to set the OYDA base configuration.')
+
   /// Sets the OYDA base configuration.
   ///
   /// This method is deprecated and will be removed in the future.
   /// It is recommended to set the OYDA base from the oydacli instead.
-  Future<void> setOydaBase(String host, String port, String oydaBase, String user, String password) async {
+  Future<void> setOydaBase(String host, String port, String oydaBase,
+      String user, String password) async {
     await connectionManager.setOydaBase(host, port, oydaBase, user, password);
   }
 
@@ -50,15 +52,35 @@ class OydaInterface {
   /// Selects rows from the specified table based on the given conditions.
   ///
   /// Returns a list of maps, where each map represents a row in the table.
-  Future<List<Map<String, dynamic>>> selectRows(String tableName, List<Condition> conditions) async {
-    return await DataManager(connectionManager).selectRows(tableName, conditions);
+  Future<List<Map<String, dynamic>>> selectRows(
+      String tableName, List<Condition> conditions) async {
+    return await DataManager(connectionManager)
+        .selectRows(tableName, conditions);
   }
 
   /// Selects specific columns from the specified table based on the given conditions.
   ///
   /// Returns a list of maps, where each map represents a row in the table.
-  Future<List<Map<String, dynamic>>> selectColumns(String tableName, List<String> columns,
+  Future<List<Map<String, dynamic>>> selectColumns(
+      String tableName, List<String> columns,
       [List<Condition>? conditions]) async {
-    return await DataManager(connectionManager).selectColumns(tableName, columns, conditions);
+    return await DataManager(connectionManager)
+        .selectColumns(tableName, columns, conditions);
+  }
+
+  /// Inserts a row into the specified table.
+  Future<void> insertRow(String tableName, Map<String, dynamic> row) async {
+    await DataManager(connectionManager).insertRow(tableName, row);
+  }
+
+  /// Updates a row in the specified table based on the given conditions.
+  Future<void> updateRow(String tableName, Map<String, dynamic> row,
+      List<Condition> conditions) async {
+    await DataManager(connectionManager).updateRow(tableName, row, conditions);
+  }
+
+  /// Deletes a row from the specified table based on the given conditions.
+  Future<void> deleteRow(String tableName, List<Condition> conditions) async {
+    await DataManager(connectionManager).deleteRow(tableName, conditions);
   }
 }

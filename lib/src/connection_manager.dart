@@ -57,7 +57,8 @@ class ConnectionManager {
   ///
   /// Returns:
   ///   - A map containing the connection parameters.
-  Map<String, dynamic> getConnectionParams([Map<String, dynamic>? additionalParams]) {
+  Map<String, dynamic> getConnectionParams(
+      [Map<String, dynamic>? additionalParams]) {
     checkConnectionParams();
     final Map<String, dynamic> params = {
       'host': host,
@@ -82,7 +83,8 @@ class ConnectionManager {
   /// ```dart
   /// final response = await sendRequest('https://example.com/api', {'param1': 'value1'});
   /// ```
-  Future<T> sendRequest<T>(String endpoint, Map<String, dynamic> additionalParams) async {
+  Future<T> sendRequest<T>(
+      String endpoint, Map<String, dynamic> additionalParams) async {
     final requestBody = getConnectionParams(additionalParams);
 
     final url = Uri.parse('https://oydabackend.azurewebsites.net$endpoint');
@@ -96,7 +98,6 @@ class ConnectionManager {
 
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
-
         if (T == List<Map<String, dynamic>>) {
           if (responseBody is List) {
             return responseBody.map((e) => e as Map<String, dynamic>).toList() as T;
@@ -131,7 +132,8 @@ class ConnectionManager {
     }
   }
 
-  @Deprecated("Set the oydabase from the oydacli instead. This method will be removed in the future.")
+  @Deprecated(
+      "Set the oydabase from the oydacli instead. This method will be removed in the future.")
 
   /// Sets the OYDA base configuration.
   ///
@@ -142,8 +144,13 @@ class ConnectionManager {
   /// The `password` parameter specifies the password.
   ///
   /// Returns a `Future` that completes when the OYDA base is set.
-  Future<void> setOydaBase(String? host, String? port, String? oydaBase, String? user, String? password) async {
-    if (host == null || port == null || oydaBase == null || user == null || password == null) {
+  Future<void> setOydaBase(String? host, String? port, String? oydaBase,
+      String? user, String? password) async {
+    if (host == null ||
+        port == null ||
+        oydaBase == null ||
+        user == null ||
+        password == null) {
       throw Exception('Missing required parameters for setting the oydabase.');
     }
 
@@ -161,7 +168,8 @@ class ConnectionManager {
       return;
     }
 
-    final url = Uri.parse('http://oydabackend.azurewebsites.net/api/set_oydabase');
+    final url =
+        Uri.parse('http://oydabackend.azurewebsites.net/api/set_oydabase');
     final Map<String, dynamic> requestBody = {
       'host': host,
       'port': port,
@@ -190,7 +198,8 @@ class ConnectionManager {
         this.password = password;
 
         final responseBody = jsonDecode(response.body);
-        print(responseBody['message'] ?? 'Connected to Oydabase @ $host:$port/$oydaBase.');
+        print(responseBody['message'] ??
+            'Connected to Oydabase @ $host:$port/$oydaBase.');
       } else {
         final responseBody = jsonDecode(response.body);
         throw '${responseBody['error']}';

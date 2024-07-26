@@ -41,4 +41,37 @@ class DataManager {
     return await connectionManager.sendRequest(
         '/api/select_columns', additionalParams);
   }
+
+  Future<void> insertRow(String tableName, Map<String, dynamic> row) async {
+    String? devKey = connectionManager.devKey;
+    final additionalParams = {
+      'table_name': '${tableName}_$devKey',
+      'row': row,
+    };
+    await connectionManager.sendRequest('/api/insert_row', additionalParams);
+  }
+
+  Future<void> updateRow(String tableName, Map<String, dynamic> row,
+      List<Condition> conditions) async {
+    final conditionString =
+        conditions.map((condition) => condition.toString()).join(' AND ');
+    String? devKey = connectionManager.devKey;
+    final additionalParams = {
+      'table_name': '${tableName}_$devKey',
+      'row': row,
+      'condition': conditionString,
+    };
+    await connectionManager.sendRequest('/api/update_row', additionalParams);
+  }
+
+  Future<void> deleteRow(String tableName, List<Condition> conditions) async {
+    final conditionString =
+        conditions.map((condition) => condition.toString()).join(' AND ');
+    String? devKey = connectionManager.devKey;
+    final additionalParams = {
+      'table_name': '${tableName}_$devKey',
+      'condition': conditionString,
+    };
+    await connectionManager.sendRequest('/api/delete_row', additionalParams);
+  }
 }
